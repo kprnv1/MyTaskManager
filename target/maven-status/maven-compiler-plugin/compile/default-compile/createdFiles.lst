@@ -1,0 +1,12 @@
+service/Status.class
+Main.class
+model/Epic.class
+service/InMemoryHistoryManager.class
+service/Runner.class
+service/HistoryTest.class
+service/TaskManager.class
+service/Managers.class
+model/Task.class
+model/SubTask.class
+service/HistoryManager.class
+service/InMemoryTaskManager.class
