@@ -5,9 +5,9 @@ import service.Runner;
 public class Main {
     public static void main(String[] args) {
         Runner runner = new Runner();
-        runner.start();
+//        runner.start();
 
         HistoryTest historyTest = new HistoryTest();
-//        historyTest.start();
+        historyTest.start();
     }
 }

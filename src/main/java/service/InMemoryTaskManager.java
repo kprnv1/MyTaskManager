@@ -78,8 +78,10 @@ public class InMemoryTaskManager implements TaskManager {
             return getIdEpic(id);
         } else if (subTasks.containsKey(id)) {
             return getIdSubTask(id);
-        } else System.out.println("Такой задачи нет");
-        return id;
+        } else {
+            System.out.println("Такой задачи нет");
+            return id;
+        }
     }
 
     @Override
@@ -152,7 +154,9 @@ public class InMemoryTaskManager implements TaskManager {
             deleteEpicById(id);
         } else if (subTasks.containsKey(id)) {
             deleteIdSubTask(id);
-        } else System.out.println("Такой задачи нет");
+        } else {
+            System.out.println("Такой задачи нет");
+        }
     }
 
     @Override
@@ -204,6 +208,11 @@ public class InMemoryTaskManager implements TaskManager {
             subTasks.get(id).setStatus(DONE);
             calculateStatus(epic.getId());
         }
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
 
 }

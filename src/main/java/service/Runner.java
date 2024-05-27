@@ -7,11 +7,11 @@ import model.Task;
 import static service.Managers.getDefaultHistory;
 
 public class Runner {
-    protected InMemoryTaskManager taskManager = new InMemoryTaskManager(getDefaultHistory());
+    protected TaskManager taskManager = new InMemoryTaskManager(getDefaultHistory());
 
     public void start() {
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -21,7 +21,7 @@ public class Runner {
         System.out.println(taskManager.getId(task.getId()));
         System.out.println("Закончили создавать простую задачу");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -31,7 +31,7 @@ public class Runner {
         System.out.println(taskManager.getId(epic.getId()));
         System.out.println("Закончили создавать сложную задачу");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -45,7 +45,7 @@ public class Runner {
         System.out.println("Закончили создавать подзадачу");
         System.out.println("И добавили в сложную задачу");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -54,7 +54,7 @@ public class Runner {
         System.out.println(taskManager.getId(task.getId()));
         System.out.println("Закочили обновлять задачу по id");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -64,7 +64,7 @@ public class Runner {
         System.out.println(taskManager.getId(epic1.getId()));
         System.out.println("Закончили обновлять сложную задачу по id");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -82,7 +82,7 @@ public class Runner {
         System.out.println("Закончили создавать подзадачу");
         System.out.println("И добавили в сложную задачу");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -92,7 +92,7 @@ public class Runner {
         System.out.println(taskManager.getId(4));
         System.out.println("Закончили получать задачи по id");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -103,7 +103,7 @@ public class Runner {
         System.out.println(taskManager.getSubtask());
         System.out.println("Закончили обновлять подзадачу");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -112,7 +112,7 @@ public class Runner {
         System.out.println(taskManager.getTask());
         System.out.println("Закончили удалять по id");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -123,7 +123,7 @@ public class Runner {
         System.out.println(taskManager.getEpic());
         System.out.println("Установили статус");
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -132,7 +132,7 @@ public class Runner {
         taskManager.createEpic(epic2);
         System.out.println(taskManager.getId(epic2.getId()));
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -141,7 +141,7 @@ public class Runner {
         taskManager.createEpic(epic3);
         System.out.println(taskManager.getId(epic3.getId()));
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -152,7 +152,7 @@ public class Runner {
         System.out.println(taskManager.getId(epic5.getId()));
         System.out.println(taskManager.getId(epic5.getId()));
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
         System.out.println("");
 
@@ -162,7 +162,7 @@ public class Runner {
         System.out.println("");
 
         System.out.println("-----------------------------------------------------------");
-        System.out.println("История задач: " + taskManager.historyManager.getHistory());
+        System.out.println("История задач: " + taskManager.getHistory());
         System.out.println("-----------------------------------------------------------");
     }
 }

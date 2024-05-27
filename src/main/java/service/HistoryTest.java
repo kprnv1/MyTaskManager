@@ -8,11 +8,11 @@ import static service.Managers.getDefaultHistory;
 
 public class HistoryTest {
 
-    protected InMemoryTaskManager taskManager = new InMemoryTaskManager(getDefaultHistory());
+    protected TaskManager taskManager = new InMemoryTaskManager(getDefaultHistory());
 
     public void start() {
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("1: Создаем простую задачу");
@@ -21,7 +21,7 @@ public class HistoryTest {
         System.out.println(taskManager.getId(task.getId()));
         System.out.println("Закончили создавать простую задачу\n");
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("2: Создаем новую задачу");
@@ -30,7 +30,7 @@ public class HistoryTest {
         System.out.println(taskManager.getId(task1.getId()));
         System.out.println("Закончили создавать простую задачу\n");
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("3: Создаем такую же задачу");
@@ -39,7 +39,7 @@ public class HistoryTest {
         System.out.println(taskManager.getId(task2.getId()));
         System.out.println("Закончили создавать простую задачу\n");
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("4: Создаем ещё одну задачу, но не вызываем методом getId()");
@@ -47,7 +47,7 @@ public class HistoryTest {
         Task task3 = new Task("Сходить в кино");
         taskManager.create(task3);
         System.out.println("Закончили создавать простую задачу\n");
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("5: Вызовем предыдущую задачу 2 раза методом getId(), " +
@@ -56,7 +56,7 @@ public class HistoryTest {
         System.out.println(taskManager.getId(task2.getId()));
         System.out.println();
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("6: Создаем сложную задачу и вызывем методом getId()");
@@ -65,7 +65,7 @@ public class HistoryTest {
         System.out.println(taskManager.getId(epic.getId()));
         System.out.println("Закончили создавать сложную задачу\n");
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("7: Создаем подзадачу");
@@ -78,7 +78,7 @@ public class HistoryTest {
         System.out.println("Закончили создавать подзадачу");
         System.out.println();
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("8: Вернем пару задач, " +
@@ -88,7 +88,7 @@ public class HistoryTest {
         System.out.println(taskManager.getId(task.getId()));
         System.out.println();
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
         System.out.println("9: И напоследок вернем еще одну задачу, " +
@@ -98,7 +98,7 @@ public class HistoryTest {
 
         System.out.println();
 
-        System.out.println("history: " + taskManager.historyManager.getHistory());
+        System.out.println("history: " + taskManager.getHistory());
         System.out.println();
 
     }
