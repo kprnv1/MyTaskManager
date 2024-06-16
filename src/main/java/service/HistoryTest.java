@@ -7,7 +7,6 @@ import model.Task;
 import static service.Managers.getDefaultHistory;
 
 public class HistoryTest {
-
     protected TaskManager taskManager = new InMemoryTaskManager(getDefaultHistory());
 
     public void start() {
