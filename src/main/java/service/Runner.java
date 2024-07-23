@@ -2,59 +2,91 @@ package service;
 
 import model.Epic;
 import model.SubTask;
-import model.Task;
 
 import static service.Managers.getDefaultHistory;
 
 public class Runner {
     protected TaskManager taskManager = new InMemoryTaskManager(getDefaultHistory());
-    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
+//    InMemoryHistoryManager taskManager = new InMemoryHistoryManager();
 
 
     public void start() {
-//        taskManager.createEpic(new Epic("1"));
-//        taskManager.createSubTask(1, new SubTask("01"));
-//        taskManager.createSubTask(1, new SubTask("02"));
-//        taskManager.createSubTask(1, new SubTask("03"));
-//
-//        System.out.println(taskManager.getHistory());
 
+        System.out.println("1: Создаем задачу");
+        Epic epic1 = new Epic("Эпик №1");
+        taskManager.createEpic(epic1);
+        System.out.println(epic1);
+        System.out.println("getHistory: " + taskManager.getHistory());
+        System.out.println();
 
-        historyManager.linkLast(new Epic("Строим дом"));
-        System.out.println(historyManager.getHistory());
-        historyManager.linkLast(new SubTask("Заливаем фундамент"));
-        System.out.println(historyManager.getHistory());
-        historyManager.linkLast(new SubTask("Выкладываем стены"));
-        System.out.println(historyManager.getHistory());
-        historyManager.linkLast(new SubTask("Ставим крышу"));
-        System.out.println(historyManager.getHistory());
+        System.out.println("1-1: Создаем подзадачу");
+        SubTask subTask1 = new SubTask("Заплатить за авто");
 
-        historyManager.linkLast(new Epic("Строим дом"));
-        System.out.println(historyManager.getHistory());
+        taskManager.createSubTask(epic1.getId(), subTask1);
+        System.out.println(taskManager.getId(subTask1.getId()));
+        System.out.println(epic1);
+        System.out.println("Закончили создавать подзадачу");
+        System.out.println("getHistory: " + taskManager.getHistory());
+        System.out.println();
 
-        historyManager.removeNode(historyManager.first);
-        System.out.println(historyManager.getHistory());
-//        historyManager.removeNode(historyManager.last);
-        historyManager.linkLast(new SubTask("1"));
-        historyManager.linkLast(new SubTask("2"));
-        historyManager.linkLast(new SubTask("3"));
-        historyManager.linkLast(new SubTask("4"));
-        historyManager.linkLast(new SubTask("5"));
-        historyManager.linkLast(new SubTask("6"));
-        historyManager.linkLast(new SubTask("7"));
-        historyManager.linkLast(new SubTask("8"));
-        historyManager.linkLast(new SubTask("9"));
+        System.out.println("1-2: Создаем подзадачу");
+        SubTask subTask2 = new SubTask("Заплатить за квартиру");
 
-        System.out.println(historyManager.getHistory());
+        taskManager.createSubTask(epic1.getId(), subTask2);
+        System.out.println(taskManager.getId(subTask2.getId()));
+        System.out.println(epic1);
+        System.out.println("Закончили создавать подзадачу");
+        System.out.println("getHistory: " + taskManager.getHistory());
+        System.out.println();
 
+        System.out.println("1-3: Создаем подзадачу");
+        SubTask subTask3 = new SubTask("Заплатить за дом");
 
+        taskManager.createSubTask(epic1.getId(), subTask3);
+        System.out.println(taskManager.getId(subTask3.getId()));
+        System.out.println(epic1);
+        System.out.println("Закончили создавать подзадачу");
+        System.out.println("getHistory: " + taskManager.getHistory());
+        System.out.println();
 
+        System.out.println("2: Создаем задачу");
+        Epic epic2 = new Epic("Эпик №2");
+        taskManager.createEpic(epic2);
+        System.out.println(epic2);
+        System.out.println("getHistory: " + taskManager.getHistory());
+
+        System.out.println(taskManager.getHistory());
+
+        System.out.println("Запрашиваем задачи:");
+        taskManager.getId(2);
+        System.out.println("1 - " + taskManager.getHistory());
+        taskManager.getId(3);
+        System.out.println("2 - " + taskManager.getHistory());
+        taskManager.getId(4);
+        System.out.println("3 - " + taskManager.getHistory());
+        taskManager.getId(3);
+        System.out.println("4 - " + taskManager.getHistory());
+        taskManager.getId(1);
+        System.out.println("5 - " + taskManager.getHistory());
+        taskManager.getId(5);
+        System.out.println("6 - " + taskManager.getHistory());
+        taskManager.getId(2);
+        System.out.println("7 - " + taskManager.getHistory());
+
+        taskManager.getHistory().clear();
+        System.out.println("Очищаем все задачи");
+        System.out.println("\nИтого : \n" + taskManager.getHistory());
 
     }
-//        System.out.println("-----------------------------------------------------------");
-//        System.out.println("История задач: " + taskManager.getHistory());
-//        System.out.println("-----------------------------------------------------------");
-//        System.out.println("");
+
+
+
+
+
+
+
+
+
 //
 //        System.out.println("1: Создаем простую задачу");
 //        Task task = new Task("Посетить музей");

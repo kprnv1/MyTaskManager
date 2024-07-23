@@ -136,6 +136,7 @@ public class InMemoryTaskManager implements TaskManager {
         epics.clear();
         subTasks.clear();
         seq = 0;
+//        historyManager.getHistory().clear();
         //TODO новое удаление добавить
     }
 
