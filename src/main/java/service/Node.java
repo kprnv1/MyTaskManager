@@ -1,94 +1,85 @@
 package service;
 
-import java.util.Objects;
+import model.Task;
 
-import static service.InMemoryHistoryManager.head;
-import static service.InMemoryHistoryManager.tail;
+public class Node {
 
-public class Node <Task> {
+    private boolean head = false;
+    private  boolean tail = false;
 
-        private Node<Task> nextElement;
-        private Node<Task> previousElement;
-        private Task currentElement;
+    private Task item;
+    private Node next;
+    private Node last;
 
-        public Node(Node<Task> previousElement, Task currentElement, Node<Task> nextElement) {
-            this.previousElement = previousElement;
-            this.currentElement = currentElement;
-            this.nextElement = nextElement;
-        }
-
-    public Node<Task> getNextElement() {
-        return nextElement;
+    public Node(Task item, Node next, Node last) {
+        this.item = item;
+        this.next = next;
+        this.last = last;
     }
 
-    public void setNextElement(Node<Task> nextElement) {
-        this.nextElement = nextElement;
+    public boolean isHead() {
+        return head;
     }
 
-    public Node<Task> getPreviousElement() {
-        return previousElement;
+    public void setHead(boolean head) {
+        this.head = head;
     }
 
-    public void setPreviousElement(Node<Task> previousElement) {
-        this.previousElement = previousElement;
+    public boolean isTail() {
+        return tail;
     }
 
-    public Task getCurrentElement() {
-        return currentElement;
+    public void setTail(boolean tail) {
+        this.tail = tail;
     }
 
-    public void setCurrentElement(Task currentElement) {
-        this.currentElement = currentElement;
+    public Task getItem() {
+        return item;
     }
 
-    public static Node removeNode(Node<model.Task> node) {
-        if (head.equals(node) && tail.equals(node)) {
-            head = null;
-            tail = null;
-            return node;
-        }
-        if (!head.equals(node) && !tail.equals(node)) {
-            node.getPreviousElement().setNextElement(node.getNextElement());
-            node.getNextElement().setPreviousElement(node.getPreviousElement());
-            node.setNextElement(null);
-            node.setPreviousElement(null);
-            return node;
-        }
-        if (head.equals(node)) {
-            node.getNextElement().setPreviousElement(null);
-            head = node.getNextElement();
-            node.setNextElement(null);
-            return node;
-        }
-        if (tail.equals(node)) {
-            node.getPreviousElement().setNextElement(null);
-            tail = node.getPreviousElement();
-            node.setPreviousElement(null);
-            return node;
-        }
-        return null;
+    public void setItem(Task item) {
+        this.item = item;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node<?> node = (Node<?>) o;
-        return Objects.equals(nextElement, node.nextElement) && Objects.equals(previousElement, node.previousElement)
-                && Objects.equals(currentElement, node.currentElement);
+    public Node getNext() {
+        return next;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(nextElement, previousElement, currentElement);
+    public void setNext(Node next) {
+        this.next = next;
+    }
+
+    public Node getLast() {
+        return last;
+    }
+
+    public void setLast(Node last) {
+        this.last = last;
     }
 
     @Override
     public String toString() {
         return "Node{" +
-                "nextElement=" + nextElement +
-                ", previousElement=" + previousElement +
-                ", currentElement=" + currentElement +
+                "next=" + next +
+                ", last=" + last +
+                ", item=" + item +
                 '}';
     }
+
+    //Head=true
+//Tail=false
+//Значит node это первый элемент
+//
+//Head = true
+//Tail =true
+//Значит в списке 1 элемент node
+//
+//Head =false
+//Tail = false
+//Значит node не первый и не послелний элемент в списке = серидина
+//
+//Head  = false
+//Tail =true
+// значит node послелний в списке
+
 }

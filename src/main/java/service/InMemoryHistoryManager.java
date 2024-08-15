@@ -4,72 +4,62 @@ import model.Task;
 
 import java.util.*;
 
-import static service.Node.removeNode;
-
 public class InMemoryHistoryManager implements HistoryManager {
-    private static final Map<Integer, Node<Task>> listHistory = new HashMap<>();
-    public static Node<Task> head = null;
-    public static Node<Task> tail = null;
-
-    private Node<Task> linkLast(Task task) {
-        Node<Task> lastNode;
-        if (!listHistory.isEmpty()) {
-            lastNode = new Node<>(tail, task, null);
-            tail.setNextElement(lastNode);
-            tail = lastNode;
-            listHistory.put(task.getId(), lastNode);
-        } else {
-            lastNode = new Node<>(null, task, null);
-            listHistory.put(task.getId(), lastNode);
-            head = lastNode;
-            tail = lastNode;
-        }
-        return lastNode;
-    }
-
-    private List<Task> getTasks() {
-        List<Task> list = new ArrayList<>();
-        if (head != null && tail != null) {
-            getNextTask(head, list);
-        }
-        return list;
-    }
-
-    private void getNextTask(Node<Task> node, List<Task> list) {
-        list.add(node.getCurrentElement());
-        if (!tail.equals(node)) {
-            getNextTask(node.getNextElement(),list);
-        }
-    }
-
-    @Override
-    public List<Task> getHistory() {
-        return getTasks();
-    }
-
-    @Override
-    public void remove(int id) {
-        if (listHistory.containsKey(id)) {
-            Node<Task> node = listHistory.remove(id);
-            removeNode(node);
-        }
-    }
+    private final HashMap<Integer, Node> history = new HashMap<>();
 
     @Override
     public void add(Task task) {
-        if (task != null) {
-            if (listHistory.get(task.getId()) != null && listHistory.containsKey(task.getId())) {
-                removeNode(listHistory.get(task.getId()));
-                listHistory.remove(task.getId());
+        Node node = getLastNode();
+        if (node != null) {
+            Node nodeLast = new Node(task, null, node);
+            history.put(task.getId(), nodeLast);
+            node.setTail(false);
+            nodeLast.setTail(true);
+        } else {
+            Node nodeLast = new Node(task, null, null);
+            history.put(task.getId(), nodeLast);
+            nodeLast.setTail(true);
+            nodeLast.setHead(true);
+        }
+
+    }
+
+    private Node getLastNode() {
+        for (Integer i : history.keySet()) {
+            if (history.get(i).isTail()) {
+                return history.get(i);
             }
-            Node<Task> node = linkLast(task);
-            listHistory.put(task.getId(), node);
+        }
+        return null;
+    }
+
+    private void removeTaskInHistoryByTask(Task task) {
+        Node node = history.get(task.getId());
+        if (node == null) {
+            return;
+        }
+        if (node.isTail() && !node.isHead()) {   // ХВОСТ и не голова
+            Node lastNode = node.getLast();
+            lastNode.setNext(null);
+            lastNode.setTail(true);
+            node.setLast(null);
+            history.remove(task.getId());
+        } else if (node.isTail() && node.isHead()) {  // ХВОСТ и ГОЛОВА
+            history.remove(task.getId());
+        } else if (!node.isHead() && !node.isTail()) {  // не голова и не хвост
+            Node lastNode = node.getLast();
+            Node nextNode = node.getNext();
+            lastNode.setNext(nextNode);
+            nextNode.setLast(lastNode);
+            node.setLast(null);
+            node.setNext(null);
+            history.remove(task.getId());
+        } else if (!node.isTail() && node.isHead()) {  // не хвост и ГОЛОВА
+            Node nextNode = node.getLast();
+            nextNode.setNext(null);
+            node.setHead(false);
+            node.setLast(null);
         }
     }
 
-    public static void clearHistory() {
-        listHistory.clear();
-        head = null;
-        tail = null;
-    }
 }
