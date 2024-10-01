@@ -8,13 +8,15 @@ public class Node {
     private  boolean tail = false;
 
     private Task item;
-    private Node next;
-    private Node last;
+    private Node next;  //следующий
+    private Node prev;  //придыдущий
 
-    public Node(Task item, Node next, Node last) {
+
+    public Node(Node prev,Task item, Node next) {
+        this.prev = prev;
         this.item = item;
         this.next = next;
-        this.last = last;
+
     }
 
     public boolean isHead() {
@@ -49,20 +51,20 @@ public class Node {
         this.next = next;
     }
 
-    public Node getLast() {
-        return last;
+    public Node getPrev() {
+        return prev;
     }
 
-    public void setLast(Node last) {
-        this.last = last;
+    public void setPrev(Node prev) {
+        this.prev = prev;
     }
 
     @Override
     public String toString() {
         return "Node{" +
-                "next=" + next +
-                ", last=" + last +
+  //              "prev=" + prev + // Node
                 ", item=" + item +
+ //               ", next=" + next + // Node
                 '}';
     }
 
