@@ -3,20 +3,16 @@ package service;
 import model.Task;
 
 public class Node {
-
     private boolean head = false;
-    private  boolean tail = false;
-
+    private boolean tail = false;
     private Task item;
-    private Node next;  //следующий
-    private Node prev;  //придыдущий
+    private Node next;
+    private Node prev;
 
-
-    public Node(Node prev,Task item, Node next) {
+    public Node(Node prev, Task item, Node next) {
         this.prev = prev;
         this.item = item;
         this.next = next;
-
     }
 
     public boolean isHead() {
@@ -61,27 +57,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Node{" +
-  //              "prev=" + prev + // Node
-                ", item=" + item +
- //               ", next=" + next + // Node
-                '}';
+        return "Node{item=" + item + '}';
     }
-
-    //Head=true
-//Tail=false
-//Значит node это первый элемент
-//
-//Head = true
-//Tail =true
-//Значит в списке 1 элемент node
-//
-//Head =false
-//Tail = false
-//Значит node не первый и не послелний элемент в списке = серидина
-//
-//Head  = false
-//Tail =true
-// значит node послелний в списке
 
 }

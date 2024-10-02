@@ -21,7 +21,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        System.out.println("Вот этот элемент удаляется: " + history.get(id).getItem());
         removeTaskInHistoryByTask(history.get(id).getItem());
     }
 
@@ -39,7 +38,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 
-    public void linkLast(Task task) {   // Новый метод
+    public void linkLast(Task task) {
         Node node = getLastNode();
         if (node != null) {
             Node nodeLast = new Node(node, task, null);
@@ -57,7 +56,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     }
 
-    private Node getLastNode() {    // Последний node                // Новый метод
+    private Node getLastNode() {
         for (Integer i : history.keySet()) {
             if (history.get(i).isTail()) {
                 return history.get(i);
@@ -66,38 +65,66 @@ public class InMemoryHistoryManager implements HistoryManager {
         return null;
     }
 
-    private void removeTaskInHistoryByTask(Task task) {  // Новый метод
+    private void removeTaskInHistoryByTask(Task task) {
+        System.out.println(task.getId());
         Node node = history.get(task.getId());
         if (node == null) {
             return;
         }
-        if (node.isTail() && !node.isHead()) {   // ХВОСТ и не голова              РАБОТАЕТ
-            Node firstNode = node.getPrev();  // первый элемент
+        if (node.isTail() && !node.isHead()) {   //                               РАБОТАЕТ безупречно
+            Node firstNode = node.getPrev();
             firstNode.setNext(null);
             firstNode.setTail(true);
             node.setPrev(null);
             history.remove(task.getId());
-        } else if (node.isTail() && node.isHead()) {  // ХВОСТ и ГОЛОВА (один элемент)            РАБОТАЕТ
+        } else if (node.isTail() && node.isHead()) {  //(один элемент)            РАБОТАЕТ безупречно
             history.remove(task.getId());
-        } else if (!node.isHead() && !node.isTail()) {  // не голова и не хвост
-//            Node lastNode = node.getPrev();
-//            Node nextNode = node.getNext();
-//            lastNode.setNext(nextNode);
-//            nextNode.setPrev(lastNode);
-//            node.setPrev(null);
-//            node.setNext(null);
-            history.remove(task.getId());
-        } else if (!node.isTail() && node.isHead()) {  // не хвост и ГОЛОВА
-            Node lastNode = node.getNext();
-            lastNode.getItem().setId(task.getId());
-            lastNode.setPrev(null);
-            lastNode.setHead(true);
-            node.setItem(null);
-            history.remove(task.getId());
-            history.put(0, lastNode);
-            history.remove(task.getId() + 1);
+        } else if (!node.isHead() && !node.isTail()) {  // (самая середина)       РАБОТАЕТ безупречно
+            removeTaskMiddle(task);
+        } else if (!node.isTail() && node.isHead()) {  // не хвост и ГОЛОВА       РАБОТАЕТ безупречно
+            removeTaskFirst(task);
         }
         id--;
     }
 
+
+    public void removeTaskMiddle(Task task) {
+        int number = 0;
+        int count = 0;
+        for (int i = task.getId(); i < history.size(); i++) {
+            Node node = history.get(i);
+            Node firstNode = node.getPrev();
+            Node lastNode = node.getNext();
+            int num = i;
+            number = num;
+            count++;
+            if (lastNode == null) {
+                history.remove(task.getId() + count - 1);
+                break;
+            }
+            firstNode.setNext(lastNode);
+            lastNode.getItem().setId(num);
+            history.put(num, lastNode);
+        }
+
+
+    }
+
+
+    public void removeTaskFirst(Task task) {                     // Дополнительный метод РАБОТАЕТ
+        for (int i = 0; i < history.size() - 1; i++) {
+            Node node = history.get(task.getId() + i);
+            Node lastNode = node.getNext();
+            lastNode.setPrev(null);
+            lastNode.getItem().setId(task.getId() + i);
+            history.remove(task.getId() + i);
+            history.put(task.getId() + i, lastNode);
+            if (i == history.size() - 2) {
+                lastNode.setNext(null);
+                history.remove(task.getId() + i + 1);
+            }
+        }
+
+    }
 }
+
