@@ -13,7 +13,12 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         if (task != null) {
             task.setId(id++);
-//            remove(task.getId()); // должно быть не более 10
+            int SIZE_LIST = 4;
+//            if (history.size() + 1 == SIZE_LIST) {
+//                history.remove(task.getId() - (SIZE_LIST-1));
+//                id--;
+//                return;
+//            }
             linkLast(task);
         }
     }
@@ -46,15 +51,16 @@ public class InMemoryHistoryManager implements HistoryManager {
             node.setNext(nodeLast);
             node.setTail(false);
             nodeLast.setTail(true);
+            compareTask(task);
         } else {
             Node nodeLast = new Node(null, task, null);
             history.put(task.getId(), nodeLast);
             nodeLast.setTail(true);
             nodeLast.setHead(true);
-
         }
 
     }
+
 
     private Node getLastNode() {
         for (Integer i : history.keySet()) {
@@ -65,23 +71,31 @@ public class InMemoryHistoryManager implements HistoryManager {
         return null;
     }
 
+    private void compareTask(Task task) {
+        for (int i = 0; i < history.size() - 1; i++) {
+            if (history.get(i).getItem().getName().equals(task.getName())) {
+                task = history.get(i).getItem();
+                removeTaskInHistoryByTask(task);
+            }
+        }
+    }
+
     private void removeTaskInHistoryByTask(Task task) {
-        System.out.println(task.getId());
         Node node = history.get(task.getId());
         if (node == null) {
             return;
         }
-        if (node.isTail() && !node.isHead()) {   //                               РАБОТАЕТ безупречно
+        if (node.isTail() && !node.isHead()) {
             Node firstNode = node.getPrev();
             firstNode.setNext(null);
             firstNode.setTail(true);
             node.setPrev(null);
             history.remove(task.getId());
-        } else if (node.isTail() && node.isHead()) {  //(один элемент)            РАБОТАЕТ безупречно
+        } else if (node.isTail() && node.isHead()) {  //(один элемент)
             history.remove(task.getId());
-        } else if (!node.isHead() && !node.isTail()) {  // (самая середина)       РАБОТАЕТ безупречно
+        } else if (!node.isHead() && !node.isTail()) {  // (самая середина)
             removeTaskMiddle(task);
-        } else if (!node.isTail() && node.isHead()) {  // не хвост и ГОЛОВА       РАБОТАЕТ безупречно
+        } else if (!node.isTail() && node.isHead()) {
             removeTaskFirst(task);
         }
         id--;
@@ -89,29 +103,24 @@ public class InMemoryHistoryManager implements HistoryManager {
 
 
     public void removeTaskMiddle(Task task) {
-        int number = 0;
         int count = 0;
         for (int i = task.getId(); i < history.size(); i++) {
             Node node = history.get(i);
             Node firstNode = node.getPrev();
             Node lastNode = node.getNext();
-            int num = i;
-            number = num;
             count++;
             if (lastNode == null) {
                 history.remove(task.getId() + count - 1);
                 break;
             }
             firstNode.setNext(lastNode);
-            lastNode.getItem().setId(num);
-            history.put(num, lastNode);
+            lastNode.getItem().setId(i);
+            history.put(i, lastNode);
         }
-
-
     }
 
 
-    public void removeTaskFirst(Task task) {                     // Дополнительный метод РАБОТАЕТ
+    public void removeTaskFirst(Task task) {
         for (int i = 0; i < history.size() - 1; i++) {
             Node node = history.get(task.getId() + i);
             Node lastNode = node.getNext();
@@ -124,7 +133,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                 history.remove(task.getId() + i + 1);
             }
         }
-
     }
+
 }
 
