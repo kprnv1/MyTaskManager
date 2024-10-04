@@ -6,21 +6,21 @@ import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final HashMap<Integer, Node> history = new HashMap<>();
-    public int id = 0;
+    private int id = 0;
 
 
     @Override
     public void add(Task task) {
+        int SIZE_LIST = 10;
         if (task != null) {
             task.setId(id++);
-            int SIZE_LIST = 4;
-//            if (history.size() + 1 == SIZE_LIST) {
-//                history.remove(task.getId() - (SIZE_LIST-1));
-//                id--;
-//                return;
-//            }
             linkLast(task);
         }
+        if (history.size() > SIZE_LIST) {
+            Task task0 = history.get(0).getItem();
+            removeTaskInHistoryByTask(task0);
+        }
+
     }
 
 
@@ -43,7 +43,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 
-    public void linkLast(Task task) {
+    private void linkLast(Task task) {
         Node node = getLastNode();
         if (node != null) {
             Node nodeLast = new Node(node, task, null);
@@ -102,7 +102,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 
-    public void removeTaskMiddle(Task task) {
+    private void removeTaskMiddle(Task task) {
         int count = 0;
         for (int i = task.getId(); i < history.size(); i++) {
             Node node = history.get(i);
@@ -120,7 +120,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 
-    public void removeTaskFirst(Task task) {
+    private void removeTaskFirst(Task task) {
         for (int i = 0; i < history.size() - 1; i++) {
             Node node = history.get(task.getId() + i);
             Node lastNode = node.getNext();
@@ -128,11 +128,13 @@ public class InMemoryHistoryManager implements HistoryManager {
             lastNode.getItem().setId(task.getId() + i);
             history.remove(task.getId() + i);
             history.put(task.getId() + i, lastNode);
+            node.setHead(true);
             if (i == history.size() - 2) {
                 lastNode.setNext(null);
                 history.remove(task.getId() + i + 1);
             }
         }
+
     }
 
 }
