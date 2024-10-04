@@ -11,7 +11,7 @@ public class CustomLinkedListTest {
         historyManager.add(new Task("add-1"));
         historyManager.add(new Task("add-1"));
         historyManager.add(new Task("add-2"));
-//        historyManager.add(new Task("add-1"));
+        historyManager.add(new Task("add-1"));
 
         historyManager.add(new Task("add-3"));
         historyManager.add(new Task("add-4"));
