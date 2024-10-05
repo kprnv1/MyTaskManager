@@ -10,21 +10,22 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        int SIZE_LIST = 10;
         if (task != null) {
             task.setId(id++);
             linkLast(task);
         }
+        final int SIZE_LIST = 10;
         if (history.size() > SIZE_LIST) {
             Task task0 = history.get(0).getItem();
             removeTaskInHistoryByTask(task0);
         }
-
     }
 
     @Override
     public void remove(int id) {
-        removeTaskInHistoryByTask(history.get(id).getItem());
+        if (id < 10 && id < history.size()) {
+            removeTaskInHistoryByTask(history.get(id).getItem());
+        } else System.out.println("Значения " + id + " не существует!");
     }
 
     @Override
@@ -71,6 +72,12 @@ public class InMemoryHistoryManager implements HistoryManager {
         for (int i = 0; i < history.size() - 1; i++) {
             if (history.get(i).getItem().getName().equals(task.getName())) {
                 task = history.get(i).getItem();
+                Node node = history.get(task.getId());
+                Node firstNode = node.getPrev();
+                Node lastNode = node.getNext();
+                firstNode.setNext(lastNode);
+                lastNode.setPrev(firstNode);
+//                node = null;
                 removeTaskInHistoryByTask(task);
             }
         }
@@ -101,14 +108,12 @@ public class InMemoryHistoryManager implements HistoryManager {
         int count = 0;
         for (int i = task.getId(); i < history.size(); i++) {
             Node node = history.get(i);
-            Node firstNode = node.getPrev();
             Node lastNode = node.getNext();
             count++;
             if (lastNode == null) {
                 history.remove(task.getId() + count - 1);
                 break;
             }
-            firstNode.setNext(lastNode);
             lastNode.getItem().setId(i);
             history.put(i, lastNode);
         }
@@ -128,7 +133,6 @@ public class InMemoryHistoryManager implements HistoryManager {
                 history.remove(task.getId() + i + 1);
             }
         }
-
     }
 
 }
