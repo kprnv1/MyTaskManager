@@ -37,6 +37,7 @@ public class InMemoryTaskManager implements TaskManager {
         this.epics = new HashMap<>();
         this.subTasks = new HashMap<>();
         this.historyManager = historyManager;
+//        this.historyManager = Managers.getDefaultHistory();
     }
 
     public int generateId() {
@@ -136,8 +137,6 @@ public class InMemoryTaskManager implements TaskManager {
         epics.clear();
         subTasks.clear();
         seq = 0;
-//        historyManager.getHistory().clear();
-        //TODO новое удаление добавить
     }
 
     @Override
@@ -145,7 +144,6 @@ public class InMemoryTaskManager implements TaskManager {
         for (SubTask subTask : epics.get(id).getSubTasks()) {
             subTasks.remove(subTask.getId());
             epics.remove(id);
-            historyManager.remove(id);
         }
     }
 
@@ -156,8 +154,10 @@ public class InMemoryTaskManager implements TaskManager {
             historyManager.remove(id);
         } else if (epics.containsKey(id)) {
             deleteEpicById(id);
+            historyManager.remove(id);
         } else if (subTasks.containsKey(id)) {
             deleteIdSubTask(id);
+            historyManager.remove(id);
         } else {
             System.out.println("Такой задачи нет");
         }

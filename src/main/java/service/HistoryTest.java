@@ -10,95 +10,68 @@ public class HistoryTest {
     protected TaskManager taskManager = new InMemoryTaskManager(getDefaultHistory());
 
     public void start() {
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("1: Создаем простую задачу");
-        Task task = new Task("Посетить музей");
-        taskManager.create(task);
-        System.out.println(taskManager.getId(task.getId()));
-        System.out.println("Закончили создавать простую задачу\n");
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("2: Создаем новую задачу");
-        Task task1 = new Task("Прогуляться перед сном");
+        Task task1 = new Task("Первый");
         taskManager.create(task1);
-        System.out.println(taskManager.getId(task1.getId()));
-        System.out.println("Закончили создавать простую задачу\n");
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("3: Создаем такую же задачу");
-        Task task2 = new Task("Посетить музей");
+        Task task2 = new Task("Второй");
         taskManager.create(task2);
-        System.out.println(taskManager.getId(task2.getId()));
-        System.out.println("Закончили создавать простую задачу\n");
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("4: Создаем ещё одну задачу, но не вызываем методом getId()");
-        System.out.println("Соответственно задача не добавляется в историю");
-        Task task3 = new Task("Сходить в кино");
+        Task task3 = new Task("Третий");
         taskManager.create(task3);
-        System.out.println("Закончили создавать простую задачу\n");
+
+        Epic epic1 = new Epic("Заплатить налоги");
+        taskManager.createEpic(epic1);
+        SubTask subTask = new SubTask("Заплатить 1 налог");
+        epic1.addSubtaskInEpic(subTask);
+        taskManager.createSubTask(epic1.getId(), subTask);
+
+        SubTask subTask1 = new SubTask("Заплатить 2 налог");
+        epic1.addSubtaskInEpic(subTask1);
+        taskManager.createSubTask(epic1.getId(), subTask1);
+
+        SubTask subTask2 = new SubTask("Заплатить 3 налог");
+        epic1.addSubtaskInEpic(subTask2);
+        taskManager.createSubTask(epic1.getId(), subTask2);
+
+        taskManager.getId(1);
         System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
+        taskManager.getId(2);
+        System.out.println("history: " + taskManager.getHistory());
+        taskManager.getId(3);
+        System.out.println("history: " + taskManager.getHistory());
+        taskManager.getId(4);
+        System.out.println("history: " + taskManager.getHistory());
 
-        System.out.println("5: Вызовем предыдущую задачу 2 раза методом getId(), " +
-                "чтобы тоже добавить в историю 2 раза");
-        System.out.println(taskManager.getId(task2.getId()));
-        System.out.println(taskManager.getId(task2.getId()));
-        System.out.println();
+        Task task8 = new Task("Восьмой");
+        taskManager.create(task8);
+        taskManager.getId(8);
+
+        Task task9 = new Task("Девятый");
+        taskManager.create(task9);
+        taskManager.getId(9);
+
+        Task task10 = new Task("Девятый");
+        taskManager.create(task10);
+        taskManager.getId(10);
+
+        Task task11 = new Task("Одиннадцатый");
+        taskManager.create(task11);
+        taskManager.getId(11);
+
+        Task task12 = new Task("Двенадцатый");
+        taskManager.create(task12);
+        taskManager.getId(12);
+
+        Task task13 = new Task("Тринадцатый");
+        taskManager.create(task13);
+        taskManager.getId(13);
+
+        Task task14 = new Task("Четырнадцатый");
+        taskManager.create(task14);
+        taskManager.getId(14);
 
         System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("6: Создаем сложную задачу и вызывем методом getId()");
-        Epic epic = new Epic("Заплатить налоги");
-        taskManager.createEpic(epic);
-        System.out.println(taskManager.getId(epic.getId()));
-        System.out.println("Закончили создавать сложную задачу\n");
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("7: Создаем подзадачу");
-        System.out.println("И добавляем подзадачу в сложную задачу");
-        SubTask subTask = new SubTask("Заплатить за авто");
-        epic.addSubtaskInEpic(subTask);
-        taskManager.createSubTask(epic.getId(), subTask);
-        System.out.println(taskManager.getId(subTask.getId()));
-        System.out.println(epic);
-        System.out.println("Закончили создавать подзадачу");
-        System.out.println();
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("8: Вернем пару задач, " +
-                "чтобы общее количество было 10");
-        System.out.println(taskManager.getId(task.getId()));
-        System.out.println(taskManager.getId(task1.getId()));
-        System.out.println(taskManager.getId(task.getId()));
-        System.out.println();
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
-        System.out.println("9: И напоследок вернем еще одну задачу, " +
-                "чтобы общее количество было более 10 и увидим, " +
-                "что 1-ая задача Посетить музей была удалена");
-        System.out.println(taskManager.getId(task1.getId()));
-
-        System.out.println();
-
-        System.out.println("history: " + taskManager.getHistory());
-        System.out.println();
-
+        System.out.println(taskManager.getHistory().size());
     }
 }
+
+
+
