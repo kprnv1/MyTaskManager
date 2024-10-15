@@ -19,7 +19,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        if (history.size() == 10){
+        if (history.size() == SIZE_LIST){
             history.remove(1);
             transfer();
         }
@@ -39,10 +39,10 @@ public class InMemoryHistoryManager implements HistoryManager {
             node.setNext(null);
             history.remove(node.getItem().getId());
             transfer();
-        } else if (node.isTail() && node.isHead()) {  //(один элемент)
+        } else if (node.isTail() && node.isHead()) {
             history.remove(node.getItem().getId());
             transfer();
-        } else if (!node.isHead() && !node.isTail()) {  // (самая середина)
+        } else if (!node.isHead() && !node.isTail()) {
             Node lastNode = node.getNext();
             Node firstNode = node.getPrev();
             node.setNext(null);
@@ -78,7 +78,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node node = getLastNode();
         if (node != null) {
             Node nodeLast = new Node(node, task, null);
-            history.put(history.size() + 1, nodeLast);                //
+            history.put(history.size() + 1, nodeLast);
             nodeLast.setPrev(node);
             node.setNext(nodeLast);
             node.setTail(false);
