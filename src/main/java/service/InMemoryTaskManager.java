@@ -10,22 +10,22 @@ import static service.Status.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    protected HashMap<Integer, Task> tasks;
-    protected HashMap<Integer, Epic> epics;
-    protected HashMap<Integer, SubTask> subTasks;
+    protected Map<Integer, Task> tasks;
+    protected Map<Integer, Epic> epics;
+    protected Map<Integer, SubTask> subTasks;
 
     @Override
-    public HashMap<Integer, Task> getTask() {
+    public Map<Integer, Task> getTask() {
         return tasks;
     }
 
     @Override
-    public HashMap<Integer, Epic> getEpic() {
+    public Map<Integer, Epic> getEpic() {
         return epics;
     }
 
     @Override
-    public HashMap<Integer, SubTask> getSubtask() {
+    public Map<Integer, SubTask> getSubtask() {
         return subTasks;
     }
 
@@ -37,6 +37,7 @@ public class InMemoryTaskManager implements TaskManager {
         this.epics = new HashMap<>();
         this.subTasks = new HashMap<>();
         this.historyManager = historyManager;
+//        this.historyManager = Managers.getDefaultHistory();
     }
 
     public int generateId() {
@@ -150,10 +151,13 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteId(int id) {
         if (tasks.containsKey(id)) {
             tasks.remove(id);
+            historyManager.remove(id);
         } else if (epics.containsKey(id)) {
             deleteEpicById(id);
+            historyManager.remove(id);
         } else if (subTasks.containsKey(id)) {
             deleteIdSubTask(id);
+            historyManager.remove(id);
         } else {
             System.out.println("Такой задачи нет");
         }
