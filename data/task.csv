@@ -1,0 +1,9 @@
+id,type,name,status,description,epic,startTime,duration
+1,TASK,Task - 1,NEW,null,null
+2,TASK,Task - 2,NEW,null,null
+3,EPIC,Epic - 3,NEW,null,null
+4,SUBTASK,SubTask - 1,NEW,null,Epic{id=3, name=Epic - 3, status=NEW, description=null, subtask=[]}
+5,SUBTASK,SubTask - 2,NEW,null,Epic{id=3, name=Epic - 3, status=NEW, description=null, subtask=[]}
+6,SUBTASK,SubTask - 3,NEW,null,Epic{id=3, name=Epic - 3, status=NEW, description=null, subtask=[]}
+
+1,2,3,4,5,6

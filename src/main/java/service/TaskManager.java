@@ -17,11 +17,11 @@ public interface TaskManager {
 
     Object getId(int id);
 
-    void create(Task task);
+    Task create(Task task);
 
-    void createEpic(Epic epic);
+    Epic createEpic(Epic epic);
 
-    void createSubTask(int idEpic, SubTask subTask);
+    SubTask createSubTask(int idEpic, SubTask subTask);
 
     void update(int id, Task task);
 
@@ -47,4 +47,15 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
+    List<Task> getListAllTask();
+
+    List<SubTask> getListAllSubTask();
+
+    List<Epic> getListAllEpic();
+
+    Task getIdTask(int id);
+
+    SubTask getIdSubTask(int id);
+
+    Epic getIdEpic(int id);
 }

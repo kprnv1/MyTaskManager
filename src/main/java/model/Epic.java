@@ -7,6 +7,20 @@ import java.util.List;
 public class Epic extends Task {
     protected List<SubTask> subTasks = new ArrayList<>();
 
+    private int epicNumber;
+
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
+    public void setEpic(int epicNumber) {
+        this.epicNumber = epicNumber;
+    }
+
+    public Epic(String name, String description) {
+        super(name, description);
+        type = TaskType.EPIC;
+    }
     public void addSubtaskInEpic(SubTask subTask) {
         subTasks.add(subTask);
     }
